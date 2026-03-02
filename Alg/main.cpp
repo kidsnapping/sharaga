@@ -6,7 +6,6 @@
 using namespace std;
 using namespace chrono;
 
-// -------------------- Глобальные счетчики --------------------
 long long Cn;   // comparisons
 long long Mn;   // moves
 long long Tn;   // total = Cn + Mn
@@ -17,7 +16,6 @@ void resetCounters() {
     Tn = 0;
 }
 
-// -------------------- Заполнение массива --------------------
 
 // 1. Случайное заполнение
 void fillRandom(char* arr, int n, char minChar = 'a', char maxChar = 'z') {
@@ -42,7 +40,14 @@ void fillWithoutKey(char* arr, int n, char key) {
     }
 }
 
-// -------------------- АЛГОРИТМ 1 --------------------
+// Вывод массива
+void printArray(char* arr, int n) {
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+}
+
+// Алгоритм1: удаление со свдигом влево
 void delFirstMethod(char* x, int& n, char key) {
     int i = 0;
 
@@ -61,7 +66,7 @@ void delFirstMethod(char* x, int& n, char key) {
     Tn = Cn + Mn;
 }
 
-// -------------------- АЛГОРИТМ 2 --------------------
+// Алгоритм 2: метолом двух указателей
 void delSecondMethod(char* x, int& n, char key) {
     int j = 0;
 
@@ -77,7 +82,7 @@ void delSecondMethod(char* x, int& n, char key) {
     Tn = Cn + Mn;
 }
 
-// -------------------- ТЕСТ --------------------
+// Тестирование алгоритмов
 void test(int n, char key, int mode) {
 
     char* arr1 = new char[n];
@@ -103,14 +108,20 @@ void test(int n, char key, int mode) {
         arr2[i] = arr1[i];
 
     cout << "\nРазмер массива: " << n << endl;
+    if (n <= 100) {
+    cout << "Исходный массив:\n";
+    for (int i = 0; i < n; i++)
+        cout << arr1[i] << " ";
+    cout << endl;
+    }
 
     // ---------- Алгоритм 1 ----------
     int n1 = n;
     resetCounters();
 
-    auto start1 = high_resolution_clock::now();
+    auto start1 = steady_clock::now();;
     delFirstMethod(arr1, n1, key);
-    auto stop1 = high_resolution_clock::now();
+    auto stop1 = steady_clock::now();
 
     duration<double, milli> time1 = stop1 - start1;
 
@@ -124,9 +135,9 @@ void test(int n, char key, int mode) {
     int n2 = n;
     resetCounters();
 
-    auto start2 = high_resolution_clock::now();
+    auto start2 = steady_clock::now();;
     delSecondMethod(arr2, n2, key);
-    auto stop2 = high_resolution_clock::now();
+    auto stop2 = steady_clock::now();;
 
     duration<double, milli> time2 = stop2 - start2;
 
